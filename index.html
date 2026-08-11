@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>QR Code Generator | Made By Anuka Vilochana</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<style>
+  :root {
+    --bg: #0f172a;
+    --card: #1e293b;
+    --accent: #38bdf8;
+    --text: #e2e8f0;
+    --muted: #94a3b8;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    background: linear-gradient(135deg, #0f172a, lch(16.39% 13.07 274.7));
+    color: var(--text);
+    padding: 24px;
+  }
+  .card {
+    background: var(--card);
+    border-radius: 16px;
+    padding: 32px;
+    width: 100%;
+    max-width: 420px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+    text-align: center;
+  }
+  h1 {
+    font-size: 1.4rem;
+    margin-bottom: 4px;
+  }
+  p.sub {
+    color: var(--muted);
+    font-size: 0.85rem;
+    margin-top: 0;
+    margin-bottom: 24px;
+  }
+  input, select {
+    width: 100%;
+    padding: 12px 14px;
+    border-radius: 8px;
+    border: 1px solid #334155;
+    background: #0f172a;
+    color: var(--text);
+    font-size: 0.95rem;
+    margin-bottom: 14px;
+  }
+  input:focus, select:focus {
+    outline: none;
+    border-color: var(--accent);
+  }
+  button {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    background: var(--accent);
+    color: #0f172a;
+    font-weight: 600;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: opacity 0.15s;
+    margin-bottom: 8px;
+  }
+  button:hover { opacity: 0.85; }
+  button.secondary {
+    background: transparent;
+    border: 1px solid #334155;
+    color: var(--text);
+  }
+  #qrcode {
+    margin: 20px auto 10px;
+    display: flex;
+    justify-content: center;
+    background: white;
+    padding: 16px;
+    border-radius: 12px;
+    width: fit-content;
+    min-height: 20px;
+  }
+  #qrcode img, #qrcode canvas {
+    display: block;
+  }
+  .hint {
+    color: var(--muted);
+    font-size: 0.75rem;
+    margin-top: 4px;
+  }
+   footer {
+    margin-top: 28px;
+    padding-top: 18px;
+    border-top: 1px solid #334155;
+    text-align: center;
+  }
+  footer p {
+    color: var(--muted);
+    font-size: 0.8rem;
+    margin: 0 0 12px;
+  }
+  .social-icons {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+  }
+  .social-icons a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: #0f172a;
+    border: 1px solid #334155;
+    color: var(--text);
+    transition: background 0.15s, border-color 0.15s, transform 0.15s;
+  }
+  .social-icons a:hover {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #0f172a;
+    transform: translateY(-2px);
+  }
+  .social-icons svg {
+    width: 18px;
+    height: 18px;
+    fill: currentColor;
+  }
+
+</style>
+</head>
+<body>
+  <div class="card">
+    <h1>QR Code Generator</h1>
+    <p class="sub">Create QR Code For Any Link/Text | ඕනෑම text/link එකකට QR code එකක් හදන්න</p>
+
+    <input id="textInput" type="text" placeholder="URL OR TEXT Write here ..." />
+
+    <select id="sizeSelect">
+      <option value="150">Small (150x150)</option>
+      <option value="200" selected>Medium (200x200)</option>
+      <option value="300">Large (300x300)</option>
+      <option value="400">Extra Large (400x400)</option>
+    </select>
+
+    <button id="generateBtn">Generate QR Code</button>
+    <button id="downloadBtn" class="secondary" style="display:none;">Download PNG</button>
+
+    <div id="qrcode"></div>
+    <p class="hint" id="statusText"></p>
+           <footer>
+            <div class="social-icons">
+                <a href="https://github.com/yourusername" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+                    <svg viewBox="0 0 24 24"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.09 3.29 9.4 7.86 10.93.57.1.78-.25.78-.55 0-.27-.01-1.16-.02-2.11-3.2.7-3.88-1.36-3.88-1.36-.52-1.34-1.28-1.69-1.28-1.69-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.23-1.28-5.23-5.68 0-1.25.45-2.28 1.19-3.08-.12-.29-.52-1.46.11-3.04 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.79 0c2.2-1.49 3.17-1.18 3.17-1.18.64 1.58.24 2.75.12 3.04.74.8 1.18 1.83 1.18 3.08 0 4.41-2.69 5.38-5.25 5.67.41.36.78 1.07.78 2.16 0 1.56-.01 2.82-.01 3.2 0 .3.2.66.79.55A10.51 10.51 0 0 0 23.5 12c0-6.35-5.15-11.5-11.5-11.5Z"/></svg>
+                </a>
+                <a href="https://www.linkedin.com/in/anukavilochana" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+                    <svg viewBox="0 0 24 24"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.86 0-2.15 1.45-2.15 2.94v5.67H9.34V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.38-1.85 3.61 0 4.28 2.38 4.28 5.47v6.27ZM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12ZM7.12 20.45H3.56V9h3.56v11.45Z"/></svg>
+                </a>
+                <a href="https://instagram.com/anuka_vilochana" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                    <svg viewBox="0 0 24 24"><path d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41a3.7 3.7 0 0 1-1.38-.9 3.7 3.7 0 0 1-.9-1.38c-.16-.42-.36-1.06-.41-2.23-.06-1.27-.07-1.65-.07-4.85s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.36 2.23-.41C8.42 2.17 8.8 2.16 12 2.16Zm0 1.89c-3.15 0-3.5.01-4.73.07-.97.04-1.5.2-1.85.34-.46.18-.79.39-1.14.74-.35.35-.56.68-.74 1.14-.14.35-.3.88-.34 1.85-.06 1.23-.07 1.58-.07 4.73s.01 3.5.07 4.73c.04.97.2 1.5.34 1.85.18.46.39.79.74 1.14.35.35.68.56 1.14.74.35.14.88.3 1.85.34 1.23.06 1.58.07 4.73.07s3.5-.01 4.73-.07c.97-.04 1.5-.2 1.85-.34.46-.18.79-.39 1.14-.74.35-.35.56-.68.74-1.14.14-.35.3-.88.34-1.85.06-1.23.07-1.58.07-4.73s-.01-3.5-.07-4.73c-.04-.97-.2-1.5-.34-1.85a3 3 0 0 0-.74-1.14 3 3 0 0 0-1.14-.74c-.35-.14-.88-.3-1.85-.34-1.23-.06-1.58-.07-4.73-.07Zm0 3.23a4.72 4.72 0 1 1 0 9.44 4.72 4.72 0 0 1 0-9.44Zm0 1.89a2.83 2.83 0 1 0 0 5.67 2.83 2.83 0 0 0 0-5.67Zm5.86-2.06a1.1 1.1 0 1 1-2.2 0 1.1 1.1 0 0 1 2.2 0Z"/></svg>
+                </a>
+                <a href="https://facebook.com/anukavilochana" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+                    <svg viewBox="0 0 24 24"><path d="M22 12a10 10 0 1 0-11.56 9.88v-6.99H7.9V12h2.54V9.8c0-2.5 1.49-3.89 3.77-3.89 1.1 0 2.24.2 2.24.2v2.46h-1.26c-1.24 0-1.63.77-1.63 1.56V12h2.78l-.44 2.89h-2.34v6.99A10 10 0 0 0 22 12Z"/></svg>
+                </a>
+                <a href="https://x.com/anukavilochana" target="_blank" rel="noopener noreferrer" aria-label="Twitter / X">
+                    <svg viewBox="0 0 24 24"><path d="M18.9 2H22l-7.3 8.3L23.3 22h-6.7l-5.3-6.9L5.2 22H2l7.8-8.9L1 2h6.8l4.8 6.3L18.9 2Zm-1.2 18h1.9L7.4 4H5.4l12.3 16Z"/></svg>
+                </a>
+                <a href="https://www.threads.com/@anuka_vilochana" target="_blank" rel="noopener noreferrer" aria-label="Threads">
+                    <svg viewBox="0 0 24 24"><path d="M16.5 11.2c-.1-3.5-2.1-5.5-5.6-5.6-2.1 0-3.9.9-5 2.6l1.7 1.2c.7-1.1 1.8-1.6 3.2-1.6 1.9 0 3 .9 3.3 2.5-.8-.1-1.7-.2-2.6-.1-2.7.1-4.5 1.6-4.4 3.8.1 2.2 2.1 3.4 4.5 3.3 2 0 3.4-.8 4.1-2.3.5.4.9.9 1.1 1.6l1.9-.9c-.4-.9-.9-1.6-1.6-2.2.3-.9.4-1.9.4-2.3ZM11 15.9c-1.3.1-2.3-.5-2.4-1.5-.1-1 .8-1.7 2.2-1.8.5 0 1.1 0 1.7.1v.4c0 1.6-.9 2.7-3.5 2.8Z"/></svg>
+                </a>
+            </div>
+            <div class="social-icons">
+                    <a href="https://open.spotify.com/artist/3jJzHLMx0NIMZ6wXzz9j5b?si=7Y8jm1mzSFmTKH3do7H9ZA&utm_source=copy-link&sci=spotify%3Acard-config%3A4b4zsjU0dEMMUxsNcwaCbs&nd=1&dlsi=801fc14651134fc2" target="_blank" rel="noopener noreferrer" aria-label="Spotify">
+                    <svg viewBox="0 0 24 24"><path d="M12 .5C5.6.5.5 5.6.5 12S5.6 23.5 12 23.5 23.5 18.4 23.5 12 18.4.5 12 .5Zm5.3 16.8a.75.75 0 0 1-1.03.25c-2.83-1.73-6.4-2.12-10.6-1.16a.75.75 0 1 1-.33-1.46c4.57-1.04 8.5-.6 11.7 1.34.36.22.47.68.26 1.03Zm1.43-3.18a.94.94 0 0 1-1.29.31c-3.24-1.99-8.18-2.57-12.01-1.4a.94.94 0 1 1-.55-1.8c4.38-1.33 9.83-.68 13.55 1.6.44.27.58.85.3 1.29Zm.12-3.31c-3.89-2.31-10.31-2.52-14.02-1.39a1.13 1.13 0 1 1-.66-2.16c4.26-1.29 11.33-1.04 15.79 1.61a1.13 1.13 0 1 1-1.11 1.94Z"/></svg>
+                </a>
+                <a href="https://music.apple.com/ng/artist/anuka-vilochana/1869750474" target="_blank" rel="noopener noreferrer" aria-label="Apple Music">
+                    <svg viewBox="0 0 24 24"><path d="M17.5 2H6.5A4.5 4.5 0 0 0 2 6.5v11A4.5 4.5 0 0 0 6.5 22h11a4.5 4.5 0 0 0 4.5-4.5v-11A4.5 4.5 0 0 0 17.5 2Zm-1.7 5.28v6.98c0 1.2-.98 1.87-2.02 1.87-.98 0-1.87-.6-1.87-1.6 0-.98.83-1.6 1.8-1.71.28-.03.5-.07.7-.16V9.98l-4.4.9v5.83c0 1.2-.98 1.87-2.02 1.87-.98 0-1.87-.6-1.87-1.6 0-.98.83-1.6 1.8-1.71.28-.03.5-.07.7-.16V8.1c0-.4.16-.65.63-.75l4.9-1c.5-.1.99.2.99.7v.23Z"/></svg>
+                </a>
+                <a href="https://www.deezer.com/us/artist/367857522" target="_blank" rel="noopener noreferrer" aria-label="Deezer">
+                    <svg viewBox="0 0 24 24"><path d="M2 15.5h3.4v2.6H2v-2.6Zm4.6 0H10v2.6H6.6v-2.6Zm4.6-3.2h3.4v5.8h-3.4v-5.8Zm4.6-3.2h3.4V18h-3.4V9.1ZM20.4 6h1.6v12h-1.6V6Z"/></svg>
+                </a>
+                <a href="https://www.youtube.com/@anukavilochana-music" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
+                    <svg viewBox="0 0 24 24"><path d="M23.5 6.7a3 3 0 0 0-2.1-2.1C19.5 4 12 4 12 4s-7.5 0-9.4.6A3 3 0 0 0 .5 6.7 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.3 3 3 0 0 0 2.1 2.1C4.5 20 12 20 12 20s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.3ZM9.6 15.5V8.5L15.8 12l-6.2 3.5Z"/></svg>
+                </a>
+                <a href="https://www.tiktok.com/@anukavilochana" target="_blank" rel="noopener noreferrer" aria-label="TikTok">
+                    <svg viewBox="0 0 24 24"><path d="M16.6 2h-3.3v13.9c0 1.5-1.2 2.7-2.7 2.7a2.7 2.7 0 0 1-2.7-2.7 2.7 2.7 0 0 1 2.7-2.7c.3 0 .6.05.9.14V9.9a6 6 0 0 0-.9-.07A6 6 0 0 0 4.6 15.9a6 6 0 0 0 6 6 6 6 0 0 0 6-6V8.7a8.3 8.3 0 0 0 4.8 1.5V6.9a5 5 0 0 1-4.8-4.9Z"/></svg>
+                </a>
+            </div>
+            <hr style="margin: 12px 0; border-color: #334155;">
+            <p>Made By <b>Anuka Vilochana</b></p>
+            <p>© 2026 All Rights Reserved</p>
+        </footer>
+  </div>
+
+<script>
+  const textInput = document.getElementById('textInput');
+  const sizeSelect = document.getElementById('sizeSelect');
+  const generateBtn = document.getElementById('generateBtn');
+  const downloadBtn = document.getElementById('downloadBtn');
+  const qrcodeDiv = document.getElementById('qrcode');
+  const statusText = document.getElementById('statusText');
+
+  let qr = null;
+
+  function generate() {
+    const text = textInput.value.trim();
+    if (!text) {
+      statusText.textContent = 'URL එකක් type කරන්න.';
+      return;
+    }
+    qrcodeDiv.innerHTML = '';
+    const size = parseInt(sizeSelect.value, 10);
+
+    qr = new QRCode(qrcodeDiv, {
+      text: text,
+      width: size,
+      height: size,
+      colorDark: "#000000",
+      colorLight: "#ffffff",
+      correctLevel: QRCode.CorrectLevel.H
+    });
+
+    statusText.textContent = 'QR Code Generated.Click "Download PNG" To Save.';
+    downloadBtn.style.display = 'block';
+  }
+
+  function download() {
+    setTimeout(() => {
+      const img = qrcodeDiv.querySelector('img');
+      const canvas = qrcodeDiv.querySelector('canvas');
+      const src = img ? img.src : (canvas ? canvas.toDataURL("image/png") : null);
+      if (!src) return;
+      const link = document.createElement('a');
+      link.href = src;
+      link.download = 'qrcode.png';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }, 100);
+  }
+
+  generateBtn.addEventListener('click', generate);
+  downloadBtn.addEventListener('click', download);
+  textInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') generate();
+  });
+</script>
+</body>
+</html>
